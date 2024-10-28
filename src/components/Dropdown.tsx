@@ -1,30 +1,13 @@
 "use client";
 
+import { blueTheme, whiteTheme } from '@/themes';
+import { Box, FormControl, InputLabel, MenuItem, Select, } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { MenuItem, Select, FormControl, InputLabel, Box } from '@mui/material';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#ffffff',
-    },
-    text: {
-      primary: '#808080',
-    },
-  },
-});
 
-const Dropdown = ({ color, backgroundColor, label, optionBackgroundColor, optionColor }: { 
-  color: string; 
-  backgroundColor: string; 
-  label: string; 
-  optionBackgroundColor: string; 
-  optionColor: string; 
-}) => {
+
+const Dropdown = ({ label }: { label: string }) => {
   const [option, setOption] = React.useState('');
 
   return (
@@ -33,13 +16,14 @@ const Dropdown = ({ color, backgroundColor, label, optionBackgroundColor, option
       <Select
         value={option}
         onChange={(event) => setOption(event.target.value as string)}
-        style={{ backgroundColor, color }}
         label={label}
         renderValue={(value) => (value ?? label)}
+        color="primary"
+        variant='filled'
       >
-        <MenuItem value="Option 1" sx={{ backgroundColor: optionBackgroundColor, color: optionColor }}>Option 1</MenuItem>
-        <MenuItem value="Option 2" sx={{ backgroundColor: optionBackgroundColor, color: optionColor }}>Option 2</MenuItem>
-        <MenuItem value="Option 3" sx={{ backgroundColor: optionBackgroundColor, color: optionColor }}>Option 3</MenuItem>
+        <MenuItem value="Option 1">Option 1</MenuItem>
+        <MenuItem value="Option 2">Option 2</MenuItem>
+        <MenuItem value="Option 3">Option 3</MenuItem>
       </Select>
     </FormControl>
   );
@@ -47,24 +31,18 @@ const Dropdown = ({ color, backgroundColor, label, optionBackgroundColor, option
 
 const Dropdowns = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Box sx={{ p: 3, gap: 2, display: 'flex', flexDirection: 'column' }}>
-        <Dropdown 
-          color="#808080" 
-          backgroundColor="#ffffff" 
-          label="Dropdown Blanco" 
-          optionBackgroundColor="#ffffff" 
-          optionColor="#808080" 
-        />
-        <Dropdown 
-          color="#ffffff" 
-          backgroundColor="#1976d2" 
-          label="Dropdown Azul" 
-          optionBackgroundColor="#1976d2" 
-          optionColor="#ffffff" 
-        />
-      </Box>
-    </ThemeProvider>
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+      <ThemeProvider theme={blueTheme}>
+        <Box sx={{ p: 3, gap: 2, display: 'flex', flexDirection: 'column' }}>
+          <Dropdown label="Dropdown Azul" />
+        </Box>
+      </ThemeProvider>
+      <ThemeProvider theme={whiteTheme}>
+        <Box sx={{ p: 3, gap: 2, display: 'flex', flexDirection: 'column' }}>
+          <Dropdown label="Dropdown Blanco" />
+        </Box>
+      </ThemeProvider>
+    </div>
   );
 };
 
